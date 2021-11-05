@@ -1,0 +1,21 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: scrap
+spec:
+  schedule: "* * * * *" # mimute hour day month weak
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: scrap
+            image: ghcr.io/kimjanghyun1010/scrap-app:a4bc9596
+            imagePullPolicy: IfNotPresent
+            securityContext:
+              privileged: true
+          hostIPC: true
+          hostNetwork: true
+          hostPID: true
+          restartPolicy: OnFailure
